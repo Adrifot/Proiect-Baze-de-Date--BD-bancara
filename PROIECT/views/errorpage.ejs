@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eroare</title>
+</head>
+<body>
+    <h1 align="center">OOPS! AM INTAMPINAT O EROARE!</h1>
+    <% if(q.err == 1) { %>
+        <p>Probabil niste date au fost introduse gresit. Verificati datele introduse (inclusiv pentru posibile date duplicate) si incercati din nou.</p>
+    <% } else if(q.err == 2) { %>
+        <p>Stergerea nu este permisa. Aceasta inregistrare este referintiata de catre alte date. Eliminati referintele catre aceasta inregistrare inainte de a incerca din nou.</p>
+    <% } else if(q.err == 3) { %>
+        <p>Atentie! Nu ati introdus niciun filtru de cautare!</p>
+    <% } else { %>
+        <p>Am dat de o eroare neasteptata. Va rugam sa reverificati datele si sa incercati din nou.</p>
+    <% } %>
+    
+    <button id="goback">Inapoi</button>
+    <script>
+        const button = document.querySelector("#goback");
+        button.addEventListener("click", (ev) => {
+            history.back();
+        });
+    </script>
+</body>
+</html>

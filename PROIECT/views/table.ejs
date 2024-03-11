@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=table%></title>
+    <link rel="stylesheet" href="/styles/clienti.css">
+</head>
+<body>
+    <h1>Tabelul <%=table.toUpperCase();%></h1>
+    <a href="/">Inapoi</a><br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <% for(let key in data[0]) if(data[0].hasOwnProperty(key)) { %>
+                    <th id="<%=key%>">
+                        <%=key%>
+                        <form action="/table/<%=table%>/sort/<%=key%>/ASC" method="GET"><button class="ASC">^</button></form>
+                        <form action="/table/<%=table%>/sort/<%=key%>/DESC" method="GET"><button class="DESC">V</button></form>
+                    </th>
+                <% } %>
+            </tr>
+        </thead>
+        <tbody>
+            <% var n = 0; %>
+            <% data.forEach(row => { %>
+                <% n++; %>
+                <tr>
+                    <td><%= n %>. 
+                        <% if(table == "activitati_online") { %>
+                            <a class="editLink" href="/table/<%=table%>/edit/<%=Object.keys(row)[0]%>/<%=row[Object.keys(row)[0]]%>?data_login=<%=row[Object.keys(row)[1]]%>">(edit)</a>
+                        <% } else { %>
+                            <a class="editLink" href="/table/<%=table%>/edit/<%=Object.keys(row)[0]%>/<%=row[Object.keys(row)[0]]%>">(edit)</a>
+                        <% } %>
+                    </td>
+                    <% for (let key = 0; key < Object.keys(row).length; key++) { %>
+                        <% if (Object.keys(row)[key] === "data_nasterii") { %>
+                            <td><%= row[Object.keys(row)[key]] %></td>
+                        <% } else if(Object.keys(row)[key] === "data_transfer" || Object.keys(row)[key] === "data_login") { %>
+                            <td><%= row[Object.keys(row)[key]] %></td>
+                        <% } else { %>
+                            <td><%= row[Object.keys(row)[key]] %></td>
+                        <% } %>
+                    <% } %>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <% if(field && mode) { %>
+        <div id="helper" data-field="<%=field%>" data-mode="<%=mode%>"></div>
+        <script>
+            const helper = document.querySelector("#helper");
+            const fld = helper.dataset.field;
+            const md = helper.dataset.mode;
+            const activeSortButton = document.querySelector("#"+fld+" ."+md);
+            activeSortButton.classList.add("activeSort");
+            if(activeSortButton.classList.contains("activeSort")) activeSortButton.parentElement.action=`/table/<%=table%>`;
+        </script>
+    <% } %>
+</body>
+</html>

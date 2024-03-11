@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transferuri</title>
+</head>
+<style>
+    table, th, td {
+        border: 2px solid black;
+        margin: 0;
+    }
+</style>
+<body>
+    <p>
+        <b>Cerinta:</b> Sa se afiseze numele expeditorului, IBAN-ul contului cu care expeditorul initiaza tranzactia, 
+        numele destinatarului si IBAN-ul contului care beneficiaza de tranzactie, data de transfer, cantitatea si moneda in care se face transferul, 
+        precum si salariile celor 2 clienti ce participa la tranzactie, pentru toate tranzactiile efectuate intre orele 9 si 17, in care clientii au un salariu de cel putin 5000 lei/luna.
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <% for(let key in data[0]) if(data[0].hasOwnProperty(key)) { %>
+                    <th><%=key%></th>    
+                <% } %>
+            </tr>
+        </thead>
+        <tbody>
+            <% var n = 0; %>
+            <% data.forEach(row => { %>
+                <% n++; %>
+                <tr>
+                    <td><%= n %></td>
+                    <% for (let key = 0; key < Object.keys(row).length; key++) { %>
+                        <td><%= row[Object.keys(row)[key]] %></td>
+                    <% } %>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <a href="/">Inapoi</a>
+</body>
+</html>

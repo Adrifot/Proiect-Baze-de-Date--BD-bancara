@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cautare</title>
+    <style>
+        input, select {
+            margin-right: 1.5em;
+            margin-bottom: 1em;
+        }
+        div {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Filtre de cautare:</h1>
+    <form action="/search" method="post" id="searchForm">
+        <label for="tableName">Se cauta in:</label>
+        <select name="tableName" id="tableName">
+            <option value="<%=table%>"><%=table%></option>
+        </select>
+        <% data.forEach(row => { %>
+            <div>
+            <label for="<%= row.COLUMN_NAME %>"><%= row.COLUMN_NAME %></label>
+            <% if(row.DATA_TYPE == 'int') { %>
+                <select name="<%=row.COLUMN_NAME%>_cond" id="<%=row.COLUMN_NAME%>_cond">
+                    <option value="=">=</option>
+                    <option value=">">></option>
+                    <option value="<"><</option>
+                    <option value=">=">&ge;</option>
+                    <option value="<=">&le;</option>
+                </select>
+                <input type="number" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>">
+            <% } else if(row.DATA_TYPE == "timestamp") { %>
+                <select name="<%=row.COLUMN_NAME%>_cond" id="<%=row.COLUMN_NAME%>_cond">
+                    <option value="=">=</option>
+                    <option value=">">></option>
+                    <option value="<"><</option>
+                    <option value=">=">&ge;</option>
+                    <option value="<=">&le;</option>
+                </select>
+                <input type="datetime-local" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>" step="1">
+            <% } else if(row.DATA_TYPE == "date") { %>
+                <select name="<%=row.COLUMN_NAME%>_cond" id="<%=row.COLUMN_NAME%>_cond">
+                    <option value="=">=</option>
+                    <option value=">">></option>
+                    <option value="<"><</option>
+                    <option value=">=">&ge;</option>
+                    <option value="<=">&le;</option>
+                </select>
+                <input type="date" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>">
+            <% } else if(row.DATA_TYPE == "float") { %>
+                <select name="<%=row.COLUMN_NAME%>_cond" id="<%=row.COLUMN_NAME%>_cond">
+                    <option value="=">=</option>
+                    <option value=">">></option>
+                    <option value="<"><</option>
+                    <option value=">=">&ge;</option>
+                    <option value="<=">&le;</option>
+                </select>
+                <input type="number" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>" step="0.01">
+            <% } else if(row.DATA_TYPE == "enum") { %>
+                <select name="<%=row.COLUMN_NAME%>" id="<%=row.COLUMN_NAME%>">
+                    <% if(table == "activitati_online") { %>
+                        <option value="NULL">Nicio actiune</option>
+                        <option value="interogare_sold">Interogare Sold</option>
+                        <option value="contactare_suport">Contactare Suport</option>
+                        <option value="verificare_istoric">Verificare Istoric</option>
+                        <option value="schimbare_setari">Schimbare Setari</option>
+                    <% } else if(table == "clienti" && row.COLUMN_NAME == "gen") { %>
+                        <option value="">-</option>
+                        <option value="M" title="Masculin">M</option>
+                        <option value="F" title="Feminin">F</option>
+                    <% } else if(table == "clienti" && row.COLUMN_NAME == "cetatenie") { %>
+                        <option value="">-</option>
+                        <option value="ROU" title="Romania">ROU</option>
+                        <option value="AUT" title="Austria">AUT</option>
+                        <option value="BEL" title="Belgia">BEL</option>
+                        <option value="BGR" title="Bulgaria">BGR</option>
+                        <option value="HRV" title="Croatia">HRV</option>
+                        <option value="CYP" title="Cipru">CYP</option>
+                        <option value="CZE" title="Cehia">CZE</option>
+                        <option value="DNK" title="Danemarca">DNK</option>
+                        <option value="EST" title="Estonia">EST</option>
+                        <option value="FIN" title="Finlanda">FIN</option>
+                        <option value="FRA" title="Franta">FRA</option>
+                        <option value="DEU" title="Germania">DEU</option>
+                        <option value="GRC" title="Grecia">GRC</option>
+                        <option value="HUN" title="Ungaria">HUN</option>
+                        <option value="IRL" title="Irlanda">IRL</option>
+                        <option value="ITA" title="Italia">ITA</option>
+                        <option value="LVA" title="Letonia">LVA</option>
+                        <option value="LTU" title="Lituania">LTU</option>
+                        <option value="LUX" title="Luxemburg">LUX</option>
+                        <option value="MLT" title="Malta">MLT</option>
+                        <option value="NLD" title="Tarile de Jos">NLD</option>
+                        <option value="POL" title="Polonia">POL</option>
+                        <option value="PRT" title="Portugalia">PRT</option>
+                        <option value="SVK" title="Slovacia">SVK</option>
+                        <option value="SVN" title="Slovenia">SVN</option>
+                        <option value="ESP" title="Spania">ESP</option>
+                        <option value="SWE" title="Suedia">SWE</option>
+                        <option value="NOT_EU" title="In afara Uniunii Europene">NOT EU</option>
+                    <% } else if(table == "adrese") { %>
+                        <option value="">-</option>
+                        <option value="RO" title="Romania">RO</option>
+                        <option value="AT" title="Austria">AT</option>
+                        <option value="BE" title="Belgia">BE</option>
+                        <option value="BG" title="Bulgaria">BG</option>
+                        <option value="HR" title="Croatia">HR</option>
+                        <option value="CY" title="Cipru">CY</option>
+                        <option value="CZ" title="Cehia">CZ</option>
+                        <option value="DK" title="Danemarca">DK</option>
+                        <option value="EE" title="Estonia">EE</option>
+                        <option value="FI" title="Finlanda">FI</option>
+                        <option value="FR" title="Franta">FR</option>
+                        <option value="DE" title="Germania">DE</option>
+                        <option value="GR" title="Grecia">GR</option>
+                        <option value="HU" title="Ungaria">HU</option>
+                        <option value="IE" title="Irlanda">IE</option>
+                        <option value="IT" title="Italia">IT</option>
+                        <option value="LV" title="Letonia">LV</option>
+                        <option value="LT" title="Lituania">LT</option>
+                        <option value="LU" title="Luxemburg">LU</option>
+                        <option value="MT" title="Malta">MT</option>
+                        <option value="NL" title="Tarile de Jos">NL</option>
+                        <option value="PL" title="Polonia">PL</option>
+                        <option value="PT" title="Portugalia">PT</option>
+                        <option value="SK" title="Slovacia">SK</option>
+                        <option value="SI" title="Slovenia">SI</option>
+                        <option value="ES" title="Spania">ES</option>
+                        <option value="SE" title="Suedia">SE</option>
+                        <option value="NOT_EU" title="In afara Uniunii Europene">NOT EU</option>
+                    <% } else if(table == "carduri") { %>
+                        <option value="">Tip Card</option>
+                        <option value="debit">debit</option>
+                        <option value="credit">credit</option>
+                    <% } %>
+                </select>
+            <% } else { %>
+                <input type="text" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>">
+            <% } %>
+            </div>
+        <% }); %>
+        <button>Efectueaza cautarea</button>
+    </form>
+    <a href="/search">Inapoi</a>
+    <div id="helper" data-table="<%=table%>"></div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editare date</title>
+    <style>
+        input, select {
+            margin-right: 1.5em;
+            margin-bottom: 1em;
+        }
+        div {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editati datele:</h1>
+    <form action="/table/<%=table%>/edit/<%=pk%>/<%=entry[0][pk]%>?_method=PATCH<% if(table === "activitati_online") { %>&data_login=<%=entry[0]["data_login"]%><% } %>" method="POST" id="insertForm">
+        <% fields.forEach(row => { %>
+            <label for="<%= row.COLUMN_NAME %>"><%= row.COLUMN_NAME %></label>
+            <% if(row.DATA_TYPE == 'int') { %>
+                <input type="number" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>" value="<%=entry[0][row.COLUMN_NAME]%>">
+            <% } else if(row.DATA_TYPE == "timestamp") { %>
+                <input type="datetime-local" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>" step="1" value="<%=entry[0][row.COLUMN_NAME]%>">
+            <% } else if(row.DATA_TYPE == "date") { %>
+                <input type="date" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>" value="<%=entry[0][row.COLUMN_NAME]%>">
+            <% } else if(row.DATA_TYPE == "float") { %>
+                <input type="number" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>" step="0.01" value="<%=entry[0][row.COLUMN_NAME]%>">
+            <% } else if(row.DATA_TYPE == "enum") { %>
+                <select name="<%=row.COLUMN_NAME%>" id="<%=row.COLUMN_NAME%>">
+                    <% if(table == "activitati_online") { %>
+                        <option value="NULL" <% if(entry[0][row.COLUMN_NAME] == "NULL") {%>selected<%}%>>Nicio actiune</option>
+                        <option value="interogare_sold" <% if(entry[0][row.COLUMN_NAME] == "interogare_sold") {%>selected<%}%>>Interogare Sold</option>
+                        <option value="contactare_suport" <% if(entry[0][row.COLUMN_NAME] == "contactare_suport") {%>selected<%}%>>Contactare Suport</option>
+                        <option value="verificare_istoric" <% if(entry[0][row.COLUMN_NAME] == "verificare_istoric") {%>selected<%}%>>Verificare Istoric</option>
+                        <option value="schimbare_setari" <% if(entry[0][row.COLUMN_NAME] == "schimbare_setari") {%>selected<%}%>>Schimbare Setari</option>
+                    <% } else if(table == "clienti" && row.COLUMN_NAME == "gen") { %>
+                        <option value="M" title="Masculin" <% if(entry[0][row.COLUMN_NAME] == "M") {%>selected<%}%>>M</option>
+                        <option value="F" title="Feminin" <% if(entry[0][row.COLUMN_NAME] == "F") {%>selected<%}%>>F</option>
+                    <% } else if(table == "clienti" && row.COLUMN_NAME == "cetatenie") { %>
+                        <option value="ROU" title="Romania" <% if(entry[0][row.COLUMN_NAME] == "ROU") {%>selected<%}%>>ROU</option>
+                        <option value="AUT" title="Austria" <% if(entry[0][row.COLUMN_NAME] == "AUT") {%>selected<%}%>>AUT</option>
+                        <option value="BEL" title="Belgia" <% if(entry[0][row.COLUMN_NAME] == "BEL") {%>selected<%}%>>BEL</option>
+                        <option value="BGR" title="Bulgaria" <% if(entry[0][row.COLUMN_NAME] == "BGR") {%>selected<%}%>>BGR</option>
+                        <option value="HRV" title="Croatia" <% if(entry[0][row.COLUMN_NAME] == "HRV") {%>selected<%}%>>HRV</option>
+                        <option value="CYP" title="Cipru" <% if(entry[0][row.COLUMN_NAME] == "CYP") {%>selected<%}%>>CYP</option>
+                        <option value="CZE" title="Cehia" <% if(entry[0][row.COLUMN_NAME] == "CZE") {%>selected<%}%>>CZE</option>
+                        <option value="DNK" title="Danemarca" <% if(entry[0][row.COLUMN_NAME] == "DNK") {%>selected<%}%>>DNK</option>
+                        <option value="EST" title="Estonia" <% if(entry[0][row.COLUMN_NAME] == "EST") {%>selected<%}%>>EST</option>
+                        <option value="FIN" title="Finlanda" <% if(entry[0][row.COLUMN_NAME] == "FIN") {%>selected<%}%>>FIN</option>
+                        <option value="FRA" title="Franta" <% if(entry[0][row.COLUMN_NAME] == "FRA") {%>selected<%}%>>FRA</option>
+                        <option value="DEU" title="Germania" <% if(entry[0][row.COLUMN_NAME] == "DEU") {%>selected<%}%>>DEU</option>
+                        <option value="GRC" title="Grecia" <% if(entry[0][row.COLUMN_NAME] == "GRC") {%>selected<%}%>>GRC</option>
+                        <option value="HUN" title="Ungaria" <% if(entry[0][row.COLUMN_NAME] == "HUN") {%>selected<%}%>>HUN</option>
+                        <option value="IRL" title="Irlanda" <% if(entry[0][row.COLUMN_NAME] == "IRL") {%>selected<%}%>>IRL</option>
+                        <option value="ITA" title="Italia" <% if(entry[0][row.COLUMN_NAME] == "ITA") {%>selected<%}%>>ITA</option>
+                        <option value="LVA" title="Letonia" <% if(entry[0][row.COLUMN_NAME] == "LVA") {%>selected<%}%>>LVA</option>
+                        <option value="LTU" title="Lituania" <% if(entry[0][row.COLUMN_NAME] == "LTU") {%>selected<%}%>>LTU</option>
+                        <option value="LUX" title="Luxemburg" <% if(entry[0][row.COLUMN_NAME] == "LUX") {%>selected<%}%>>LUX</option>
+                        <option value="MLT" title="Malta" <% if(entry[0][row.COLUMN_NAME] == "MLT") {%>selected<%}%>>MLT</option>
+                        <option value="NLD" title="Tarile de Jos" <% if(entry[0][row.COLUMN_NAME] == "NLD") {%>selected<%}%>>NLD</option>
+                        <option value="POL" title="Polonia" <% if(entry[0][row.COLUMN_NAME] == "POL") {%>selected<%}%>>POL</option>
+                        <option value="PRT" title="Portugalia" <% if(entry[0][row.COLUMN_NAME] == "PRT") {%>selected<%}%>>PRT</option>
+                        <option value="SVK" title="Slovacia" <% if(entry[0][row.COLUMN_NAME] == "SVK") {%>selected<%}%>>SVK</option>
+                        <option value="SVN" title="Slovenia" <% if(entry[0][row.COLUMN_NAME] == "SVN") {%>selected<%}%>>SVN</option>
+                        <option value="ESP" title="Spania" <% if(entry[0][row.COLUMN_NAME] == "ESP") {%>selected<%}%>>ESP</option>
+                        <option value="SWE" title="Suedia" <% if(entry[0][row.COLUMN_NAME] == "SWE") {%>selected<%}%>>SWE</option>
+                        <option value="NOT_EU" title="In afara Uniunii Europene" <% if(entry[0][row.COLUMN_NAME] == "NOT_EU") {%>selected<%}%>>NOT EU</option>
+                    <% } else if(table == "adrese") { %>
+                        <option value="RO" title="Romania" <% if(entry[0][row.COLUMN_NAME] == "RO") {%>selected<%}%>>RO</option>
+                        <option value="AT" title="Austria" <% if(entry[0][row.COLUMN_NAME] == "AT") {%>selected<%}%>>AT</option>
+                        <option value="BE" title="Belgia" <% if(entry[0][row.COLUMN_NAME] == "BE") {%>selected<%}%>>BE</option>
+                        <option value="BG" title="Bulgaria" <% if(entry[0][row.COLUMN_NAME] == "BG") {%>selected<%}%>>BG</option>
+                        <option value="HR" title="Croatia" <% if(entry[0][row.COLUMN_NAME] == "HR") {%>selected<%}%>>HR</option>
+                        <option value="CY" title="Cipru" <% if(entry[0][row.COLUMN_NAME] == "CY") {%>selected<%}%>>CY</option>
+                        <option value="CZ" title="Cehia" <% if(entry[0][row.COLUMN_NAME] == "CZ") {%>selected<%}%>>CZ</option>
+                        <option value="DK" title="Danemarca" <% if(entry[0][row.COLUMN_NAME] == "DK") {%>selected<%}%>>DK</option>
+                        <option value="EE" title="Estonia" <% if(entry[0][row.COLUMN_NAME] == "EE") {%>selected<%}%>>EE</option>
+                        <option value="FI" title="Finlanda" <% if(entry[0][row.COLUMN_NAME] == "FI") {%>selected<%}%>>FI</option>
+                        <option value="FR" title="Franta" <% if(entry[0][row.COLUMN_NAME] == "FR") {%>selected<%}%>>FR</option>
+                        <option value="DE" title="Germania" <% if(entry[0][row.COLUMN_NAME] == "DE") {%>selected<%}%>>DE</option>
+                        <option value="GR" title="Grecia" <% if(entry[0][row.COLUMN_NAME] == "GR") {%>selected<%}%>>GR</option>
+                        <option value="HU" title="Ungaria" <% if(entry[0][row.COLUMN_NAME] == "HU") {%>selected<%}%>>HU</option>
+                        <option value="IE" title="Irlanda" <% if(entry[0][row.COLUMN_NAME] == "IE") {%>selected<%}%>>IE</option>
+                        <option value="IT" title="Italia" <% if(entry[0][row.COLUMN_NAME] == "IT") {%>selected<%}%>>IT</option>
+                        <option value="LV" title="Letonia" <% if(entry[0][row.COLUMN_NAME] == "LV") {%>selected<%}%>>LV</option>
+                        <option value="LT" title="Lituania" <% if(entry[0][row.COLUMN_NAME] == "LT") {%>selected<%}%>>LT</option>
+                        <option value="LU" title="Luxemburg" <% if(entry[0][row.COLUMN_NAME] == "LU") {%>selected<%}%>>LU</option>
+                        <option value="MT" title="Malta" <% if(entry[0][row.COLUMN_NAME] == "MT") {%>selected<%}%>>MT</option>
+                        <option value="NL" title="Tarile de Jos" <% if(entry[0][row.COLUMN_NAME] == "NL") {%>selected<%}%>>NL</option>
+                        <option value="PL" title="Polonia" <% if(entry[0][row.COLUMN_NAME] == "PL") {%>selected<%}%>>PL</option>
+                        <option value="PT" title="Portugalia" <% if(entry[0][row.COLUMN_NAME] == "PT") {%>selected<%}%>>PT</option>
+                        <option value="SK" title="Slovacia" <% if(entry[0][row.COLUMN_NAME] == "SK") {%>selected<%}%>>SK</option>
+                        <option value="SI" title="Slovenia" <% if(entry[0][row.COLUMN_NAME] == "SI") {%>selected<%}%>>SI</option>
+                        <option value="ES" title="Spania" <% if(entry[0][row.COLUMN_NAME] == "ES") {%>selected<%}%>>ES</option>
+                        <option value="SE" title="Suedia" <% if(entry[0][row.COLUMN_NAME] == "SE") {%>selected<%}%>>SE</option>
+                        <option value="NOT_EU" title="In afara Uniunii Europene" <% if(entry[0][row.COLUMN_NAME] == "NOT_EU") {%>selected<%}%>>NOT EU</option>
+                    <% } else if(table == "carduri") { %>
+                        <option value="">Tip Card</option>
+                        <option value="debit" <% if(entry[0][row.COLUMN_NAME] == "debit") {%>selected<%}%>>debit</option>
+                        <option value="credit" <% if(entry[0][row.COLUMN_NAME] == "credit") {%>selected<%}%>>credit</option>
+                    <% } %>
+                </select>
+            <% } else { %>
+                <input type="text" id="<%=row.COLUMN_NAME%>" name="<%=row.COLUMN_NAME%>" value="<%=entry[0][row.COLUMN_NAME]%>">
+            <% } %>
+        <% }); %>
+        <button>Editare</button>
+    </form>
+    <form action="/table/<%=table%>/edit/<%=pk%>/<%=entry[0][pk]%>?_method=DELETE" method="post">
+        <button id="del" type="button">Sterge aceasta inregistrare</button>
+    </form>
+    <a href="/table/<%=table%>">Inapoi</a>
+    <div id="helper" data-table="<%=table%>"></div>
+    <script src="/scripts/validity.js"></script>
+    <script>
+        const delbut = document.querySelector("#del");
+        delbut.addEventListener("click", () => {
+            if(window.confirm("Sunteti siguri ca vreti sa stergeti aceasta inregistrare?")) delbut.parentElement.submit();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GROUP BY & HAVING</title>
+</head>
+<style>
+    table, th, td {
+        border: 2px solid black;
+        margin: 0;
+    }
+</style>
+<body>
+    <p>
+        <b>Cerinta:</b> Afisati salariul mediu al locuitorilor pentru fiecare oras din Romania ce exista in baza de date, dar numai pentru orasele in care salariul mediu este mai mare de 7000 lei/luna.
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nr.</th>
+                <% for(let key in data[0]) if(data[0].hasOwnProperty(key)) { %>
+                    <th><%=key%></th>    
+                <% } %>
+            </tr>
+        </thead>
+        <tbody>
+            <% var n = 0; %>
+            <% data.forEach(row => { %>
+                <% n++; %>
+                <tr>
+                    <td><%= n %></td>
+                    <% for (let key = 0; key < Object.keys(row).length; key++) { %>
+                        <td><%= row[Object.keys(row)[key]] %></td>
+                    <% } %>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <a href="/">Inapoi</a>
+</body>
+</html>

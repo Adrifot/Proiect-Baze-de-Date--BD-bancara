@@ -1,0 +1,55 @@
+
+app.get("/insert/:table", (req, res) => {
+    const {table} = req.params;
+    let sql = `SELECT * FROM ${table}`;
+    connection.query(sql, (err, result) => {
+        if(err) throw err;
+        res.render("insert", {data: result, table: table});
+    }); 
+});
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>-- <%=table%> - inserare</p>
+    <% if(table == "CLIENTI") { %>
+        <% data.forEach(row => { %>
+            <% const ds1 = row.data_nasterii; const d1 = new Date(ds1); const dn = new Date(d1); dn.setDate(d1.getDate() + 1); const dsn = dn.toISOString().slice(0, 10);%>
+            INSERT INTO CLIENTI VALUES("<%=row.CNP%>", "<%=row.nume%>", "<%=row.prenume%>", "<%=dsn%>", "<%=row.gen%>", "<%=row.email%>", "<%=row.nr_tel%>", "<%=row.cetatenie%>", <%=row.id_adresa%>, <%=row.salariu%>);<br>  
+        <% }); %>
+    <% } else if(table == "ADRESE") { %>
+        <% data.forEach(row => { %>
+            INSERT INTO ADRESE VALUES(<%=row.id_adresa%>, "<%=row.strada%>", "<%=row.oras%>", "<%=row.tara%>");<br>
+        <% }); %>
+    <% } else if(table == "ACTIVITATI_ONLINE") { %>
+        <% data.forEach(row => { %>
+            <% const ds1 = row.data_login; const d1 = new Date(ds1); const dn = new Date(d1); dn.setDate(d1.getDate() + 1); const dsn = dn.toISOString().slice(0, 19).replace("T", " ");%>
+            INSERT INTO ACTIVITATI_ONLINE VALUES("<%=row.CNP%>", "<%=dsn%>", "<%=row.activitate%>");<br>
+        <% }); %>
+    <% } else if(table == "CONTURI") { %>
+        <% data.forEach(row => { %>
+                INSERT INTO CONTURI VALUES("<%=row.IBAN%>", "<%=row.moneda_cont%>", "<%=row.CNP%>");<br>
+        <% }); %>
+    <% } else if(table == "TRANZACTII") { %>
+        <% data.forEach(row => { %>
+            <% const ds1 = row.data_transfer; const d1 = new Date(ds1); const dn = new Date(d1); dn.setDate(d1.getDate() + 1); const dsn = dn.toISOString().slice(0, 19).replace("T", " ");%>
+            INSERT INTO TRANZACTII VALUES(<%=row.id_tranzactie%>, "<%=row.iban_expeditor%>", "<%=row.iban_destinatar%>", "<%=dsn%>", <%=row.cantitate%>, "<%=row.moneda_transfer%>");<br>
+        <% }); %>
+    <% } else if(table == "OFERTE") { %>
+        <% data.forEach(row => { %>
+            INSERT INTO OFERTE VALUES(<%=row.id_oferta%>, "<%=row.nume_oferta%>", <%=row.rata_dobanda%>);<br>
+        <% }); %>
+    <% } else if(table == "CARDURI") { %>
+        <% data.forEach(row => { %>
+            INSERT INTO CARDURI VALUES(<%=row.id_card%>, <%=row.id_oferta%>, "<%=row.cod_card%>", "<%=row.tip_card%>", "<%=row.IBAN%>");<br>
+        <% }); %>
+    <% } %>
+</body>
+</html>

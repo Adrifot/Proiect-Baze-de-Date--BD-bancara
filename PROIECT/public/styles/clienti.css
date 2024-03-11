@@ -1,0 +1,14 @@
+table, td, th {
+    border: 2px solid black;
+    margin: 0;
+}
+
+form {
+    display: inline;
+}
+
+.activeSort {
+    color: red;
+    background-color: black;
+    font-weight: 900;
+}

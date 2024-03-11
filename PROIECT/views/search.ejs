@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cautare: Alegeti tabelul</title>
+</head>
+<body>
+    <h1>Cautati in tabel:</h1>
+    <form action="/search/" method="GET">
+        <label for="tableName">Cautati in:</label>
+        <select name="tableName" id="tableName" required>
+            <option value="">Selectati Tabelul</option>
+            <% data.forEach(row => { %>
+                <option value="<%=row.TABLE_NAME%>"><%=row.TABLE_NAME%></option>
+            <% });%>
+        </select>
+        <button>Efectuati o cautare</button>
+    </form>
+    <a href="/">Inapoi</a>
+    <script>
+        const form = document.querySelector("form");
+        const slct = document.querySelector("select");
+        slct.addEventListener("change", () => {
+            form.action += slct.value;
+        });
+    </script>
+</body>
+</html>

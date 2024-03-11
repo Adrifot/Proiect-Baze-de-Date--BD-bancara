@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezultat nul</title>
+</head>
+<body>
+    <h3>Rezultatul cautarii nu a returnat date</h3>
+    <p>Nu exista date ce satisfac conditiile alese.</p>
+    <button id="goback">Inapoi</button>
+    <script>
+        const button = document.querySelector("#goback");
+        button.addEventListener("click", (ev) => {
+            history.back();
+        });
+    </script>
+</body>
+</html>

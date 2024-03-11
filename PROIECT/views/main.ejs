@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Principala</title>
+    <style>
+        button {
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pagina principala</h1>
+    <h2>Vizualizare tabel:</h2>
+    <label for="tableSelect">Vizualizati:</label>
+    <select name="tableSelect" id="tableSelect">
+        <option value="">Selectati Tabelul</option>
+        <% data.forEach(row => { %>
+            <option value="<%=row.TABLE_NAME%>"><%=row.TABLE_NAME%></option>
+        <% });%>
+    </select>
+    <form action=""><button>AFISEAZA</button></form>
+    <a href="/create">Adaugati date</a> <br><br>
+    <a href="/search">Cautati intr-un tabel</a> <br><br>
+    <a href="/transfers">Exemplu Cerere din 3 tabele</a> <br>
+    <a href="/grouphave">Exemplu cerere cu <i>group by</i> si <i>having</i></a>
+    <script>
+        const form = document.querySelector("form");
+        const slct = document.querySelector("select");
+        slct.addEventListener("change", () => {
+            form.action = "/table/" + slct.value;
+        });
+    </script>
+</body>
+</html>
